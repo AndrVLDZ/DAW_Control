@@ -20,23 +20,31 @@ def print_logo(logo=''):
 
 print_logo()
 
-port = int(input('\n PORT:'))
-ip_1 = str(input(' Host_1 IP: '))
-node_1 = telnetlib.Telnet(ip_1, port)
-ip_2 = str(input(' Host_2 IP: '))
-node_2 = telnetlib.Telnet(ip_2, port)
+port = int(input('\n PORT: '))
+hosts_number = int(input(' Number of hosts: '))
+i = 0
+ip = []
+while i != hosts_number:
+    addr = str(input(' Host_' + str(i) + ' IP: '))
+    ip.append(addr)
+    i+=1
+print(len(ip))
 
 while True:
     symbol = str(input('==> '))
     if symbol == 's':
-        node_1.write(b's\r\n')
-        node_2.write(b's\r\n')
+        for i in range(len(ip)):
+            node = telnetlib.Telnet(ip[i], port)
+            node.write(b's\r\n')
     elif symbol == 'n':
-        node_1.write(b'n\r\n')
-        node_2.write(b'n\r\n')
+        for i in range(len(ip)):
+            node = telnetlib.Telnet(ip[i], port)
+            node.write(b'n\r\n')
     elif symbol == 'b':
-        node_1.write(b'b\r\n')
-        node_2.write(b'b\r\n')
+        for i in range(len(ip)):
+            node = telnetlib.Telnet(ip[i], port)
+            node.write(b'b\r\n')
     else:
-        node_1.write(bytes(str.encode(symbol)))
-        node_2.write(bytes(str.encode(symbol)))
+        for i in range(len(ip)):
+            node = telnetlib.Telnet(ip[i], port)
+            node.write(bytes(str.encode(symbol)))
